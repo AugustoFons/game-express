@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dino DB</title>
+  <!-- CDN de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <!-- Datatables -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body class="bg-dark text-white p-4">
+
+  <h1 class="text-center mb-4 pixelify-sans">Dino DB</h1>
+  <iframe src="/game/index.html" id="gameFrame"></iframe>
+
+  <form id="formScore" action="/" method="post">
+    <div class="form-container">
+      <div class="inputs">
+        <input type="text" name="name" id="" placeholder="Nombre">
+        <input type="text" name="id" placeholder="ID">
+      </div>
+  
+      <div id="pointsForm">
+        <label for="score">🎯 Máximo Puntaje: 0</label>
+        <progress id="score" max="${maxScore}" value="${score}"></progress>
+        <input type="text" name="score" id="scoreHidden" value="${score}">
+      </div>
+      <div class="div-button">
+        <button type="submit" class="btnGreen pixelify-sans">Enviar</button>
+        <small id="record">
+          Record actual: <strong>🏆${maxScore}</strong>
+        </small>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tabla para mostrar los datos -->
+  <div class="div-table table-responsive">
+    <h2 class="table-title text-center pixelify-sans">Ranking de Puntuaciones</h2>
+    <table id="rankingTable" class="table table-striped table-dark">
+      <thead>
+        <tr>
+        </tr>
+          <th>Jugador</th>
+          <th>Puntuación</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% for(let i = 0; i<listScores.length; i++ ) { %>
+        <tr>
+          <td>
+            <div style="text-align: center; font-weight: bold; font-size: 1.5em;">
+              <%= listScores[i].name %>
+            </div>
+          </td>
+          <td data-order="<%= listScores[i].score %>">
+          <div style="padding: 10px; border-radius: 10px; background-color: #222; text-align: center; color: #fff;">
+              <label for="score" style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px; display: block;">
+                  🎯 Puntaje: <%= listScores[i].score %>
+              </label>
+              <progress id="score" max="<%= listScores[0].score %>" value="<%= listScores[i].score %>" 
+                      style="width: 100%; height: 12px; border-radius: 5px; overflow: hidden; 
+                      background-color: #555; accent-color: #4CAF50;">
+              </progress>
+              <small style="display: block; margin-top: 8px; color: #bbb;">
+                  Record actual: <strong style="color: #FFD700;">🏆<%= listScores[0].score %></strong>
+              </small>
+          </div>
+        </td>
+      </tr>
+      <% } %> 
+
+      </tbody>
+    </table>
+  </div>
+
+  <script src="/javascripts/datatables.js"></script>
+
+  <script>
+    let maxScore = "<%= listScores[0].score %>"; // Un valor inicial para el puntaje máximo
+
+    document.getElementById('record').innerHTML = `
+          <small id="record" style="color: #bbb;">
+            Record actual: <strong style="color: #FFD700;">🏆${maxScore}</strong>
+          </small>
+        `
+    window.addEventListener('message', function (event) {
+      if (event.data && event.data.score !== undefined) {
+        document.getElementById('formScore').style.display = 'block';
+
+        const score = event.data.score;
+        if (score > maxScore) {
+          maxScore = score;
+        }
+        
+        document.getElementById('pointsForm').innerHTML = `
+          <label for="score" style="font-weight: bold; font-size: 1.1em; display: block; text-align: center;">
+            🎯 Máximo Puntaje: ${score}
+          </label>
+          <progress id="score" max="${maxScore}" value="${score}" style="width: 100%; height: 20px; border-radius: 5px; overflow: hidden; 
+                  background-color: #555; accent-color: #4CAF50;">
+          </progress>
+          <input type="hidden" name="score" id="scoreHidden" value="${score}">
+        `
+      }
+
+      if(event.data.play) {
+        document.getElementById('gameFrame').style.height = '270px';
+        gameFrame.contentWindow.focus();
+      }
+    });
+  </script>
+</body>
+</html>
