@@ -18,9 +18,11 @@
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </head>
 
-<body class="bg-dark text-white p-4">
+<body class="text-white dinobg">
 
-  <h1 class="text-center mb-4 pixelify-sans">Dino DB</h1>
+  <h1 class="text-center mb-4 pixelify-sans">
+    Din<span class="egg-icon"></span> DB
+  </h1>
   <iframe src="/game/index.html" id="gameFrame"></iframe>
 
   <form id="formScore" action="/" method="post">
@@ -44,12 +46,12 @@
     </div>
   </form>
 
+  <main>
   <!-- Tabla para mostrar los datos -->
   <div class="div-table table-responsive">
     <h2 class="table-title text-center pixelify-sans">Ranking de Puntuaciones</h2>
     <table id="rankingTable" class="table table-striped table-dark">
       <thead>
-        <tr>
         </tr>
           <th>Jugador</th>
           <th>Puntuación</th>
@@ -65,13 +67,13 @@
             </div>
           </td>
           <td data-order="<%= listScores[i].score %>">
-          <div style="padding: 10px; border-radius: 10px; background-color: #222; text-align: center; color: #fff;">
+          <div style="padding: 10px; border-radius: 10px; background-color: #143034; text-align: center; color: #fff;">
               <label for="score" style="font-weight: bold; font-size: 1.2em; margin-bottom: 10px; display: block;">
                   🎯 Puntaje: <%= listScores[i].score %>
               </label>
               <progress id="score" max="<%= listScores[0].score %>" value="<%= listScores[i].score %>" 
                       style="width: 100%; height: 12px; border-radius: 5px; overflow: hidden; 
-                      background-color: #555; accent-color: #4CAF50;">
+                      background-color: #555; accent-color: #FFD700;">
               </progress>
               <small style="display: block; margin-top: 8px; color: #bbb;">
                   Record actual: <strong style="color: #FFD700;">🏆<%= listScores[0].score %></strong>
@@ -80,10 +82,40 @@
         </td>
       </tr>
       <% } %> 
-
       </tbody>
     </table>
   </div>
+
+  <div style="border-radius: 10px; background-color: #0a181b; border-left: 6px solid #4CAF50; text-align: left; color: #fff; max-width: 700px; padding: 20px; margin: 50px auto; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+      <span style="color: #4CAF50; font-size: 32px; line-height: 0.9;">&#128712;</span>
+      <span style="color: #4CAF50; font-size: 22px; font-weight: bold; margin-top: 2px;">Información</span>
+    </div>
+    <p style="color: #bbbbbb; margin: 0;">
+      Este sitio hago uso de una modificación del clásico juego T-Rex Runner de Google que fue recreado en el siguiente 
+      <a href="https://github.com/wayou/t-rex-runner" target="_blank" style="color: #4CAF50; text-decoration: none;">
+        repositorio
+      </a>.
+      Aquí lo presento con nuevos estilos y código adicional para interactuar con el juego guardando y mostrando los puntajes obtenidos mediante Express, EJS y SQL.
+    </p>
+  </div>
+  
+  
+  
+</main>
+
+
+  <footer style="text-align: center; padding: 10px; padding-top: 20px; background-color: #0a181bda;  color: #bbbbbb; border-top: 4px solid #254345; width: 100%; font-weight: 700; margin-top: 50px; ">
+    <p>
+        © 2024 DINO DB. Sitio desarrollado por 
+        <a href='mailto:augustofonsdev@gmail.com' style="color: #4CAF50; text-decoration: none;">
+          augustofonsdev@gmail.com
+        </a>
+<!--         <br>
+         
+        -->
+    </p>
+  </footer>
 
   <script src="/javascripts/datatables.js"></script>
 

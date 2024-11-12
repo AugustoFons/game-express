@@ -1,3 +1,22 @@
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Esto incluye el padding y borde en el ancho y alto total */
+}
+
+.dinobg {
+    background-image: url('/images/dinobg5.jpg');
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+    .dinobg {
+        background-attachment: scroll; 
+    }
+}
+
 /* FUENTES Y TITULOS */
 .pixelify-sans {
     font-family: "Pixelify Sans", sans-serif !important;
@@ -5,38 +24,52 @@
 }
 
 h1 {
-    font-size: 60px;
+    padding-top: 24px;
+    font-size: 80px;
     float: left;
     margin-left: 10%;
-    
+    font-weight: bolder;
+    line-height: 1;
+}
+
+.egg-icon {
+    display: inline-block;
+    width: 62px; /* Ajusta el tamaño según sea necesario */
+    height: 62px;
+    background-image: url('/images/dino1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle; /* Alinear verticalmente con el texto */
+    margin-left: -7.5px;
+    margin-top: -17px;
 }
 
 .table-title {
     font-size: 40px;
-    color: #c1a401; /* Color dorado para destacar */
-    margin-bottom: 15px;
+    /* Color dorado para destacar */
+    margin-bottom: 0px;
     font-weight: bold;
     margin-top: 20px;
 }
 
 /* TABLA */
 tbody tr {
-    background-color: #1e2c3a !important;
+    background-color: transparent !important;
 }
 
 tbody tr.even {
-    background-color: #343a40 !important;
+    background-color: transparent !important;
     /* fila par */
 }
 
 tbody tr.odd {
-    background-color: #495057 !important;
+    background-color: #256036 !important;
     /* fila impar */
 }
 
 .dataTables_wrapper .dataTables_filter input {
     /* campo de búsqueda */
-    background-color: #343a40;
+    background-color: transparent;
     color: white;
     border: 1px dashed #798590;
     outline: none;
@@ -77,26 +110,35 @@ tbody tr.odd {
 .dataTables_wrapper .dataTables_length select {
     border: 1px dashed #798590;
     font-size: 18px;
-    padding: 4px;
+    padding: 4.2px;
 }
-
 
 option {
     color: black;
 }
 
 .div-table {
-    max-width: 1580px;
+    max-width: 1380px;
     display: block;
     margin: auto;
+    margin-top: 25px;
 }
 
-.table td, .table th {
+.table td,
+.table th {
     vertical-align: middle !important;
+    border: none;
+}
+
+#rankingTable {
+    border: 3px solid #0a181b;
+    border-radius: 20px;
+    background-color: #1f572d;
+    overflow: hidden;
 }
 
 @media (max-width: 660px) {
-/*     #rankingTable thead {
+    /*     #rankingTable thead {
         display: none;
     }
 
@@ -198,8 +240,8 @@ iframe {
 }
 
 #formScore button:hover {
-        background-color: darkolivegreen;
-        transition: all 0.5s;
+    background-color: darkolivegreen;
+    transition: all 0.5s;
 }
 
 #record {
@@ -216,3 +258,26 @@ input::placeholder {
     font-optical-sizing: auto;
     font-size: 20px;
 }
+
+/* progress */
+progress {
+    width: 100%;
+    height: 12px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #254345;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #254345;
+}
+
+progress::-webkit-progress-value {
+    background-color: #FFD700;
+    border-radius: 5px;
+}
+
+progress::-moz-progress-bar {
+    background-color: #FFD700;
+    border-radius: 5px;
+}/* VER EL DEL FORM */
