@@ -1,29 +1,40 @@
-let scores = [
-    { id: '100', name: "Augusto", score: 60 },
-    { id: '10', name: "Augusto", score: 65 },
-]
+const db = require('../db');
 
 let gameController = {
-    index: function(req, res, next) {
-        const listScores = scores.sort((a, b) => b.score - a.score);
-        res.render('index', { listScores });
+    index: async function(req, res, next) {
+        try {
+            // Ejecutar consulta
+            const result = await db.execute('SELECT * FROM listScores'); 
+            const listScores = result.rows.sort((a, b) => b.score - a.score);
+            res.render('index', { listScores });
+        } catch (error) {
+            res.render('index', { error: 'Error al cargar los puntajes.' });
+        }
     },
-    create: function(req, res, next) {
+    create: async function(req, res, next) {
         const { id, name, score } = req.body
 
-        const editScore = scores.find( sc => sc.id === id) // me devuelve el objeto que coincide con el id enviado
-
-        if(editScore) {
-            if(Number(score) > editScore.score) {
-                editScore.score = Number(score)
+        try {
+            const existing = await db.execute('SELECT * FROM listScores WHERE identifier = ?', [id]);
+        
+            if(existing.rows.length > 0) {
+                const currentScore = existing.rows[0].score;
+                if(Number(score) > currentScore) {
+                    await db.execute('UPDATE listScores SET score = ?, name = ? WHERE identifier = ?', [Number(score), name, id]);
+                }
+            } else {
+                await db.execute('INSERT INTO listScores (identifier, name, score) VALUES (?, ?, ?)', [
+                    id,
+                    name,
+                    Number(score),
+                ]);
             }
-
-        } else {
-            scores.push({ id, name, score: Number(score) })
+        
+            res.redirect('/');
+        } catch (error) {
+            res.render('index', { error: 'Error al cargar los puntajes.' });
         }
-
-
-        res.redirect('/');
+        
     }
 }
 
