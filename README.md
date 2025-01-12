@@ -15,4 +15,5 @@ Permite gestionar y guardar los puntajes obtenidos en una base de datos SQL aloj
 
 #### Ejecutar el proyecto
 npm start
+
 Ir a http://localhost:3000
