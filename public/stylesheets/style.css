@@ -5,11 +5,14 @@ html {
 }
 
 .dinobg {
-    padding: 0px 30px ;
     background-image: url('/images/dinobg5.jpg');
     background-size: cover;
     background-position: bottom;
     background-attachment: fixed;
+}
+
+main {
+    padding: 0px 30px ;
 }
 
 @media (max-width: 768px) {
