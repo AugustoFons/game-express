@@ -5,6 +5,7 @@ html {
 }
 
 .dinobg {
+    padding: 0px 30px;
     background-image: url('/images/dinobg5.jpg');
     background-size: cover;
     background-position: bottom;
@@ -193,6 +194,7 @@ iframe {
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 #formScore input[type="text"] {
